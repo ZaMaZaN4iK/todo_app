@@ -83,7 +83,7 @@ ptr<UserAccount> UserAccount::signUp(Session& session, const WString& login, con
         WApplication::instance()
                 ->log("notice") << "Creating user [" << login.toUTF8() << "].";
 
-        ua = session.add(std::make_unique<UserAccount>(login, password));
+        ua = session.add(cpp14::make_unique<UserAccount>(login, password));
     }
 
     transaction.commit();

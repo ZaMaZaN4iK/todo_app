@@ -37,7 +37,7 @@
 PlannerApplication::PlannerApplication(const WEnvironment& env)
         : WApplication(env)
 {
-    auto sqlite3 = std::make_unique<Dbo::backend::Sqlite3>(WApplication::appRoot() + "planner.db");
+    auto sqlite3 = cpp14::make_unique<Dbo::backend::Sqlite3>(WApplication::appRoot() + "planner.db");
     sqlite3->setProperty("show-queries", "true");
     m_session.setConnection(std::move(sqlite3));
 
@@ -62,7 +62,7 @@ PlannerApplication::PlannerApplication(const WEnvironment& env)
 
     useStyleSheet("planner.css");
 
-    Login* login = root()->addWidget(std::make_unique<Login>());
+    Login* login = root()->addWidget(cpp14::make_unique<Login>());
     login->signInSignal().connect(this, &PlannerApplication::signIn);
     login->signUpSignal().connect(this, &PlannerApplication::signUp);
 }
@@ -73,7 +73,7 @@ void PlannerApplication::signIn(const WString& login, const WString& password)
     if(ua)
     {
         root()->clear();
-        root()->addWidget(std::make_unique<PlannerCalendar>(ua));
+        root()->addWidget(cpp14::make_unique<PlannerCalendar>(ua));
     }
 }
 
@@ -83,6 +83,6 @@ void PlannerApplication::signUp(const WString& login, const WString& password)
     if(ua)
     {
         root()->clear();
-        root()->addWidget(std::make_unique<PlannerCalendar>(ua));
+        root()->addWidget(cpp14::make_unique<PlannerCalendar>(ua));
     }
 }

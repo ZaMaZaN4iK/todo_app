@@ -44,36 +44,36 @@ EntryDialog::EntryDialog(const WString& title, CalendarCell* cell)
 {
     m_cell = cell;
 
-    WTemplate* t = contents()->addWidget(std::make_unique<WTemplate>());
+    WTemplate* t = contents()->addWidget(cpp14::make_unique<WTemplate>());
     t->setTemplateText(tr("calendar.entry"));
 
-    auto summaryPtr = std::make_unique<WLineEdit>();
+    auto summaryPtr = cpp14::make_unique<WLineEdit>();
     m_summary = t->bindWidget("summary", std::move(summaryPtr));
     m_summary->setValidator(std::make_shared<WValidator>());
 
     auto timeValidator = std::make_shared<WRegExpValidator>("^([0-1][0-9]|[2][0-3]):([0-5][0-9])$");
-    auto startPtr = std::make_unique<WLineEdit>();
+    auto startPtr = cpp14::make_unique<WLineEdit>();
     m_start = t->bindWidget("start", std::move(startPtr));
     m_start->setTextSize(5);
     m_start->setValidator(timeValidator);
 
-    auto stopPtr = std::make_unique<WLineEdit>();
+    auto stopPtr = cpp14::make_unique<WLineEdit>();
     m_stop = t->bindWidget("stop", std::move(stopPtr));
     m_stop->setTextSize(5);
     m_stop->setValidator(timeValidator);
 
-    auto descriptionPtr = std::make_unique<WTextArea>();
+    auto descriptionPtr = cpp14::make_unique<WTextArea>();
     m_description = t->bindWidget("description", std::move(descriptionPtr));
 
-    TimeSuggestions* suggestions = contents()->addWidget(std::make_unique<TimeSuggestions>());
+    TimeSuggestions* suggestions = contents()->addWidget(cpp14::make_unique<TimeSuggestions>());
     suggestions->forEdit(m_start);
     suggestions->forEdit(m_stop);
 
-    auto okPtr = std::make_unique<WPushButton>(tr("calendar.entry.ok"));
+    auto okPtr = cpp14::make_unique<WPushButton>(tr("calendar.entry.ok"));
     auto ok = t->bindWidget("ok", std::move(okPtr));
     ok->clicked().connect(this, &EntryDialog::ok);
 
-    auto cancelPtr = std::make_unique<WPushButton>(tr("calendar.entry.cancel"));
+    auto cancelPtr = cpp14::make_unique<WPushButton>(tr("calendar.entry.cancel"));
     auto cancel = t->bindWidget("cancel", std::move(cancelPtr));
     cancel->clicked().connect(this, &EntryDialog::cancel);
 
@@ -100,7 +100,7 @@ void EntryDialog::ok()
 
     dbo::ptr<Entry> e =
             PlannerApplication::plannerApplication()->m_session.add(
-                    std::make_unique<Entry>());
+                    cpp14::make_unique<Entry>());
     e.modify()->start = timeStamp(m_start->text(), m_cell->date());
     e.modify()->stop = timeStamp(m_stop->text(), m_cell->date());
     e.modify()->summary = m_summary->text().toUTF8();

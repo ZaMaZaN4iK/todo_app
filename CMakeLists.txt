@@ -4,7 +4,7 @@ project(wt_todo)
 include(conanbuildinfo.cmake)
 conan_basic_setup()
 
-set(CMAKE_CXX_STANDARD 14)
+set(CMAKE_CXX_STANDARD 11)
 
 include_directories(install/include)
 link_directories(install/lib)

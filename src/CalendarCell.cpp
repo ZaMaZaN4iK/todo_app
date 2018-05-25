@@ -57,7 +57,7 @@ void CalendarCell::update(const dbo::ptr<UserAccount>& user, const WDate& date)
     {
         day += " " + WDate::longMonthName(date.month());
     }
-    auto header = std::make_unique<WText>(day);
+    auto header = cpp14::make_unique<WText>(day);
     header->setStyleClass("cell-header");
     addWidget(std::move(header));
 
@@ -82,7 +82,7 @@ void CalendarCell::showEntryDialog()
 {
     WString title = tr("calendar.entry.title").arg(m_date.toString("ddd, d MMM yyyy"));
 
-    m_dialog = std::make_unique<EntryDialog>(title, this);
+    m_dialog = cpp14::make_unique<EntryDialog>(title, this);
     m_dialog->show();
 }
 
@@ -92,6 +92,6 @@ void CalendarCell::showAllEntriesDialog()
             tr("calendar.cell.all-entries.title")
                     .arg(m_date.toString("ddd, d MMM yyyy"));
 
-    m_dialog = std::make_unique<AllEntriesDialog>(title, this);
+    m_dialog = cpp14::make_unique<AllEntriesDialog>(title, this);
     m_dialog->show();
 }

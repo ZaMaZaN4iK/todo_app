@@ -37,9 +37,9 @@
 AllEntriesDialog::AllEntriesDialog(const WString& title, CalendarCell* cell)
         : WDialog(title)
 {
-    WTemplate* t = contents()->addWidget(std::make_unique<WTemplate>(
+    WTemplate* t = contents()->addWidget(cpp14::make_unique<WTemplate>(
             tr("calendar.all-entries")));
-    auto wc = std::make_unique<WContainerWidget>();
+    auto wc = cpp14::make_unique<WContainerWidget>();
     m_container = t->bindWidget("entries", std::move(wc));
 
     dbo::Session& session = PlannerApplication::plannerApplication()->m_session;
@@ -50,7 +50,7 @@ AllEntriesDialog::AllEntriesDialog(const WString& title, CalendarCell* cell)
     WString format = EntryDialog::timeFormat;
     for (const auto& entry : entries)
     {
-        m_container->addWidget(std::make_unique<WText>(entry->start.toString(format) +
+        m_container->addWidget(cpp14::make_unique<WText>(entry->start.toString(format) +
                                                        "-" +
                                                        entry->stop.toString(format) +
                                                        ": " + entry->summary +
@@ -69,7 +69,7 @@ AllEntriesDialog::AllEntriesDialog(const WString& title, CalendarCell* cell)
         this->getJson(cell);
     }));
 
-    auto button = std::make_unique<WPushButton>(tr("calendar.cell.all-entries.close"));
+    auto button = cpp14::make_unique<WPushButton>(tr("calendar.cell.all-entries.close"));
     auto buttonPtr = t->bindWidget("close", std::move(button));
     buttonPtr->clicked().connect(this, &AllEntriesDialog::closeDialog);
 
@@ -103,7 +103,7 @@ void AllEntriesDialog::getJson(CalendarCell* cell) const
     transaction.commit();
 
     auto messageBox = m_container->addChild(
-            std::make_unique<Wt::WMessageBox>("JSON",
+            cpp14::make_unique<Wt::WMessageBox>("JSON",
                                               result,
                                               Wt::Icon::Information, Wt::StandardButton::Yes));
     messageBox->setModal(false);

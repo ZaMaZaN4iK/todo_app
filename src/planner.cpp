@@ -27,7 +27,7 @@ using namespace Wt::Dbo;
 
 std::unique_ptr<WApplication> createApplication(const WEnvironment& env)
 {
-    return std::make_unique<PlannerApplication>(env);
+    return cpp14::make_unique<PlannerApplication>(env);
 }
 
 int main(int argc, char** argv)
