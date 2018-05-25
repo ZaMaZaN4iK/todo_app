@@ -1,0 +1,20 @@
+sudo: required
+before_script:
+  - sudo apt-get install g++ cmake python-pip libboost-all-dev
+  - sudo pip install conan
+  
+# Enable C++ support
+language: cpp
+
+# Compiler selection
+compiler:
+  - gcc
+
+# Build steps
+script:
+  - conan install .
+  - mkdir build
+  - cd build
+  - cmake .. && make
+  - cd bin
+  - ./unitTest
